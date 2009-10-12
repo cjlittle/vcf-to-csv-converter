@@ -1,4 +1,4 @@
-# v0.2 Usage
+#Usage v0.2
 
 python ./convertContacts2.py -i vcfFile.vcf -o ~/csvFile.csv -d comma -q
 
