@@ -1,6 +1,6 @@
 #labels fields,mapping
 = Output Fields and Mapping v0.2 =
-For all supported tags see [SupportedTags supported tags]
+For all supported tags see [SupportedTags supported tags].
 
 || *Column* || *Source* ||
 || WARNING || internal - Any errors or warning generated during conversion for the given row ||
