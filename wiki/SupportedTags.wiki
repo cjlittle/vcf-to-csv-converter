@@ -3,7 +3,7 @@
 
 == Introduction ==
 
-The following VCARD 3.0 fields are supported, based on vCard MIME Directory Profile ([http://tools.ietf.org/html/rfc2426]):
+The following VCARD 3.0 fields are supported, based on vCard MIME Directory Profile ([http://tools.ietf.org/html/rfc2426]). For the list of output fields, and mapping information, see [OutputFields_and_Mapping Output Fields and Mapping].
 
 === FULL SUPPORT ===
   * N 	Name 	a structured representation of the name of the person, place or thing associated with the vCard object.
