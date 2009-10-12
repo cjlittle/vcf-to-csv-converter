@@ -1,0 +1,12 @@
+# v0.2 Usage
+
+python ./convertContacts2.py -i vcfFile.vcf -o ~/csvFile.csv -d comma -q
+
+Command line options:
+  * -v - print version and exit
+  * -h --help - help/usage
+  * -i filename - input filename REQUIRED
+  * -o filename - output filename REQUIRED
+  * -d [comma|tab|semicolon] - delimiter, tab is default
+  * -q - double quote the output values
+  * --trace - tons of debugging output
