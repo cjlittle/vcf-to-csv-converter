@@ -1,8 +1,9 @@
-#Usage v0.2
+#labels usage,options
+= Usage v0.2 = 
 
 python ./convertContacts2.py -i vcfFile.vcf -o ~/csvFile.csv -d comma -q
 
-Command line options:
+== Command line options ==
   * -v - print version and exit
   * -h --help - help/usage
   * -i filename - input filename REQUIRED
