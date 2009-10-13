@@ -4,7 +4,7 @@
 python ./convertContacts2.py -i vcfFile.vcf -o ~/csvFile.csv -d comma -q
 
 == Command line options ==
-  * -v - print version and exit
+  * --version - print version and exit
   * -h --help - help/usage
   * -i filename - input filename REQUIRED
   * -o filename - output filename REQUIRED
