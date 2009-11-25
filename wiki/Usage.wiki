@@ -1,7 +1,7 @@
 #labels usage,options
 = Usage v0.2 = 
 
-python ./convertContacts2.py [-i <filename> | -p <pathname>] o ~/csvFile.csv -d comma -q
+python ./convertContacts2.py (-i <filename> | -p <pathname>) o ~/csvFile.csv -d comma -q
 
 == Command line options ==
   * --version - print version and exit
