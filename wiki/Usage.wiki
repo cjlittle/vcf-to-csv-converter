@@ -1,12 +1,13 @@
 #labels usage,options
 = Usage v0.2 = 
 
-python ./convertContacts2.py -i vcfFile.vcf -o ~/csvFile.csv -d comma -q
+python ./convertContacts2.py [-i <filename> | -p <pathname>] o ~/csvFile.csv -d comma -q
 
 == Command line options ==
   * --version - print version and exit
   * -h --help - help/usage
-  * -i filename - input filename REQUIRED
+  * -i filename - input a filename
+  * -p path - input a path to vcard files (.vcs,.vcf)
   * -o filename - output filename REQUIRED
   * -d [comma|tab|semicolon] - delimiter, tab is default
   * -q - double quote the output values
