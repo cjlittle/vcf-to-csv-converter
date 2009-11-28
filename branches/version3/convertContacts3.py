@@ -66,8 +66,6 @@ class VcfToCsvConverter:
 		self.output += "\r\n"
 		self.data = self.__resetRow()
 
-	#added 11-23-09 
-	#retrieve the list of vcard file names within the directory specified
 	def __getfilenames(self):
 		try:
 			if os.path.isdir(self.inputPath):
@@ -79,9 +77,6 @@ class VcfToCsvConverter:
 			print "Directory is empty or does not contain any vcard format files."
 			sys.exit(2)
 
-	#modified 11-23-09
-	#if -i option used execute on one filename 
-	#if -p option used execute parser per filename found
 	def __parseFile(self):
 		if self.inputPath == None and self.inputFile != None:
 			for NewFileName in self.inputFile:
@@ -434,11 +429,11 @@ class MyOption(Option):
 			Option.take_action(self, action, dest, opt, value, values, parser)
 
 def main():
-	usa = "usage: python ./%prog -i<filename>|-p<pathname> -o<filename> -d<option> -q -v"
+	usa = "usage: python ./%prog -i<filename[s]>|-p<pathname> -o<filename> -d<option> -q -v"
 	ver = "%prog v0.3.000 2009-11-25 - by Petar Strinic http://petarstrinic.com contributions of code snippets by Dave Dartt"
 	des = "This program was designed to take the information within a vcard and export it's contents to a csv file for easy import into other address book clients."
 	parser = OptionParser(option_class=MyOption, usage=usa, version=ver, description=des)
-	parser.add_option("-i", "--input", action="extend", type="string", dest="input_file", default=None, help="Read data from FILENAME (required if no path specified)")
+	parser.add_option("-i", "--input", action="extend", type="string", dest="input_file", default=None, help="Read data from one or more FILENAMES seperated by a comma (required if no path specified)")
 	parser.add_option("-p", "--path", action="store", dest="input_path", default=None, help="Process all vcards within specified directory (required if no filename specified)")
 	parser.add_option("-o", "--output", action="store", dest="output_file", default="addrs.csv", help="Name of .csv file to output too (default is addrs.csv)")
 	parser.add_option("-d", "--delim", action="store", dest="delimiter", default="\t", help="Delimiter to use: comma, semicolon, tab (default is tab)")
