@@ -85,19 +85,20 @@ class VcfToCsvConverter:
 	#if -p option used execute parser per filename found
 	def __parseFile(self):
 		if self.inputPath == None and self.inputFile != None:
-			try:
-				print "Processing .... %s" % (self.inputFile)
-				inFile = codecs.open(self.inputFile, 'r', 'utf-8', 'ignore')
-				theLine = inFile.readline()
-				for theLine in inFile:
-					self.__parseLine(theLine)
-				inFile.close()
-			except IOError:
-				print "error opening file during read operation: %s" % (self.inputFile)
-				sys.exit(2)
-			outFile = codecs.open(self.outputFile, 'w', 'utf-8', 'ignore')
-			outFile.write(self.output)
-			outFile.close()
+			for NewFileName in self.inputFile:
+				try:
+					print "Processing .... %s" % (NewFileName)
+					inFile = codecs.open(NewFileName, 'r', 'utf-8', 'ignore')
+					theLine = inFile.readline()
+					for theLine in inFile:
+						self.__parseLine(theLine)
+					inFile.close()
+				except IOError:
+					print "error opening file during read operation: %s" % (NewFileName)
+					sys.exit(2)
+				outFile = codecs.open(self.outputFile, 'w', 'utf-8', 'ignore')
+				outFile.write(self.output)
+				outFile.close()
 		elif self.inputFile == None:
 			self.__getfilenames()
 			outFile = codecs.open(self.outputFile, 'w', 'utf-8', 'ignore')
@@ -438,17 +439,15 @@ def main():
 	ver = "%prog v0.3.000 2009-11-25 - by Petar Strinic http://petarstrinic.com contributions of code snippets by Dave Dartt"
 	des = "This program was designed to take the information within a vcard and export it's contents to a csv file for easy import into other address book clients."
 	parser = OptionParser(option_class=MyOption, usage=usa, version=ver, description=des)
-	parser.add_option("-i", "--input", action="extend", dest="input_file", default="None", help="Read data from FILENAME (required if no path specified)")
-	parser.add_option("-p", "--path", action="store", dest="input_path", default="None", help="Process all vcards within specified directory (required if no filename specified)")
+	parser.add_option("-i", "--input", action="extend", type="string", dest="input_file", default=None, help="Read data from FILENAME (required if no path specified)")
+	parser.add_option("-p", "--path", action="store", dest="input_path", default=None, help="Process all vcards within specified directory (required if no filename specified)")
 	parser.add_option("-o", "--output", action="store", dest="output_file", default="addrs.csv", help="Name of .csv file to output too (default is addrs.csv)")
-	parser.add_option("-d", "--delim", action="store", dest="delimiter", default="\t", help="Delimiter to use: comma, semicolon, newline, tab (default is tab)")
+	parser.add_option("-d", "--delim", action="store", dest="delimiter", default="\t", help="Delimiter to use: comma, semicolon, tab (default is tab)")
 	parser.add_option("-q", "--quote", action="store_true", dest="quote", default=False, help="Double quote the output strings (default is off)")
 	parser.add_option("-v", "--verbose", action="store_false", dest="verbose", default=True, help="Show processing information (default is on)")
 	parser.add_option("--trace", action="store_true", dest="trace", default=False, help="Displays a ton of debugging information.")
 
 	(options, args) = parser.parse_args()
-	if len(args) == 0:
-		parser.error("incorrect number of arguments")
 	if options.input_file != None and options.input_path != None:
 		parser.error("options -i and -p are mutually exclusive ...use one or the other but not both")
 	delimiter = options.delimiter
@@ -459,9 +458,6 @@ def main():
 	elif options.delimiter == "semicolon":
 		delimiter = ";"
 		delimiter_string = "semicolon"
-	elif options.delimiter == "newline":
-		delimiter = "\r\n"
-		delimiter_string = "newline"
 	if (options.input_file == None and options.input_path == None) or options.output_file == None:
 		parser.error("Required options are missing")
 	if options.input_file != None and options.input_path == None:
