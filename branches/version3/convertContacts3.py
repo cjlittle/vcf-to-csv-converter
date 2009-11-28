@@ -74,7 +74,6 @@ class VcfToCsvConverter:
 				self.inputFileArray = glob.glob(os.path.join(self.inputPath, '*.vc[sf]') )
 			else:
 				print "Invalid path please try again"
-				usage()
 				sys.exit(2)
 		except IOError:
 			print "Directory is empty or does not contain any vcard format files."
