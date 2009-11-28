@@ -1,4 +1,26 @@
 #labels usage,options
+= Usage v0.3.000 =
+
+
+Usage: python ./convertContacts3.py -i`<`filename`[`s`]``>`|-p`<`pathname`>` -o`<`filename`>` -d`<`option`>` -q -v
+
+This program was designed to take the information within a vcard and export
+it's contents to a csv file for easy import into other address book clients.
+
+Options:
+  --version         show program's version number and exit
+  -h, --help        show this help message and exit
+  -i INPUT_FILE, --input=INPUT_FILE
+                    Read data from one or more FILENAMES seperated by a comma (required if no path specified)
+  -p INPUT_PATH, --path=INPUT_PATH
+                    Process all vcards within specified directory (required if no filename specified)
+  -o OUTPUT_FILE, --output=OUTPUT_FILE
+                    Name of .csv file to output too (default is addrs.csv)
+  -d DELIMITER, --delim=DELIMITER
+                    Delimiter to use: comma, semicolon, tab (default is tab)
+  -q, --quote       Double quote the output strings (default is off)
+  -v, --verbose     Show processing information (default is on)
+
 = Usage v0.2.002 = 
 
 
