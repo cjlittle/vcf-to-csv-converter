@@ -86,7 +86,8 @@ class VcfToCsvConverter:
 		if self.inputPath == None and self.inputFile != None:
 			for NewFileName in self.inputFile:
 				try:
-					print "Processing .... %s" % (NewFileName)
+					if self.verbose:
+						print "Processing .... %s" % (NewFileName)
 					inFile = codecs.open(NewFileName, 'r', 'utf-8', 'ignore')
 					theLine = inFile.readline()
 					for theLine in inFile:
@@ -103,7 +104,8 @@ class VcfToCsvConverter:
 			outFile = codecs.open(self.outputFile, 'w', 'utf-8', 'ignore')
 			for NewFileName in self.inputFileArray:
 				try:
-					print "Processing .... %s\n" % (NewFileName)
+					if self.verbose:
+						print "Processing .... %s\n" % (NewFileName)
 					inFile = codecs.open(NewFileName, 'r', 'utf-8', 'ignore')
 					theLine = inFile.readline()
 					for theLine in inFile:
@@ -370,15 +372,13 @@ class VcfToCsvConverter:
 				self.data['WARNING'] += "Invalid format for N tag, using as FN instead. "
 				self.__trace("_name: Invalid format for N tag, using as FN instead. %s" % p)
 
-	#modified 11-23-09
-	#added inputFilePath variable and initialize into class
-	#added initialize of inputFileArray variable into class 
-	def __init__(self, inputFileName, inputFilePath, outputFileName, delimiter, quote, trace):
+	def __init__(self, inputFileName, inputFilePath, outputFileName, delimiter, quote, trace, verbose):
 		self.trace = trace
 		self.addressCount = { 'HOME' : 1, 'WORK' : 1 }
 		self.telephoneCount = { 'HOME PHONE' : 1, 'WORK PHONE' : 1, 'MOBILE PHONE' : 1, 'HOME FAX' : 1, 'WORK FAX' : 1 }
 		self.emailCount = { 'HOME' : 1, 'WORK' : 1 }
 		self.data = {}
+		self.verbose = verbose
 		self.quote = quote
 		self.delimiter = delimiter
 		self.output = ''
@@ -461,11 +461,11 @@ def main():
 		parser.error("Required options are missing")
 	if options.input_file != None and options.input_path == None:
 		print "converting %s > %s (%s delimited)" % (options.input_file, options.output_file, delimiter_string)
-		VcfToCsvConverter(options.input_file, options.input_path, options.output_file, delimiter, options.quote, options.trace)
+		VcfToCsvConverter(options.input_file, options.input_path, options.output_file, delimiter, options.quote, options.trace, options.verbose)
 		sys.exit(0)
 	elif options.input_file == None and options.input_path != None:
 		print "converting files within path: %s > %s (%s delimited)" % (options.input_path, options.output_file, delimiter_string)
-		VcfToCsvConverter(options.input_file, options.input_path, options.output_file, delimiter, options.quote, options.trace)
+		VcfToCsvConverter(options.input_file, options.input_path, options.output_file, delimiter, options.quote, options.trace, options.verbose)
 		sys.exit(0)
 
 if __name__ == "__main__":
