@@ -434,8 +434,8 @@ class MyOption(Option):
 			Option.take_action(self, action, dest, opt, value, values, parser)
 
 def main():
-	usa = "usage: %prog -i<filename>|-p<pathname> -o<filename> -d<option> -q -v"
-	ver = "%prog v0.3.000 2009-11-25 - by Petar Strinic http://petarstrinic.com\nMultifile input contribution by Dave Dartt"
+	usa = "usage: python ./%prog -i<filename>|-p<pathname> -o<filename> -d<option> -q -v"
+	ver = "%prog v0.3.000 2009-11-25 - by Petar Strinic http://petarstrinic.com contributions of code snippets by Dave Dartt"
 	des = "This program was designed to take the information within a vcard and export it's contents to a csv file for easy import into other address book clients."
 	parser = OptionParser(option_class=MyOption, usage=usa, version=ver, description=des)
 	parser.add_option("-i", "--input", action="extend", dest="input_file", default="None", help="Read data from FILENAME (required if no path specified)")
