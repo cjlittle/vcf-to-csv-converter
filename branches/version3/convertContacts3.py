@@ -19,8 +19,7 @@
 	along with this program.	If not, see <http://www.gnu.org/licenses/>.
 
 """
-#modified 11-23-09
-#added glob, os
+
 import os
 import re
 import sys
@@ -435,14 +434,14 @@ class MyOption(Option):
 			Option.take_action(self, action, dest, opt, value, values, parser)
 
 def main():
-	usage = "usage: %prog -i<filename>|-p<pathname> -o<filename> -d<option> -q -v"
-	version = "%prog v0.3.000 2009-11-25 - by Petar Strinic http://petarstrinic.com\nMultifile input contribution by Dave Dartt"
-	description = "This program was designed to take the information within a vcard and export it's contents to a csv file for easy import into other address book clients."
-	parser = OptionParser(option_class=MyOption, usage, version, description)
+	usa = "usage: %prog -i<filename>|-p<pathname> -o<filename> -d<option> -q -v"
+	ver = "%prog v0.3.000 2009-11-25 - by Petar Strinic http://petarstrinic.com\nMultifile input contribution by Dave Dartt"
+	des = "This program was designed to take the information within a vcard and export it's contents to a csv file for easy import into other address book clients."
+	parser = OptionParser(option_class=MyOption, usage=usa, version=ver, description=des)
 	parser.add_option("-i", "--input", action="extend", dest="input_file", default="None", help="Read data from FILENAME (required if no path specified)")
 	parser.add_option("-p", "--path", action="store", dest="input_path", default="None", help="Process all vcards within specified directory (required if no filename specified)")
 	parser.add_option("-o", "--output", action="store", dest="output_file", default="addrs.csv", help="Name of .csv file to output too (default is addrs.csv)")
-	parser.add_option("-d", "--delim", action="", dest="delimiter", default="\t", help="Delimiter to use: comma, semicolon, newline, tab (default is tab)")
+	parser.add_option("-d", "--delim", action="store", dest="delimiter", default="\t", help="Delimiter to use: comma, semicolon, newline, tab (default is tab)")
 	parser.add_option("-q", "--quote", action="store_true", dest="quote", default=False, help="Double quote the output strings (default is off)")
 	parser.add_option("-v", "--verbose", action="store_false", dest="verbose", default=True, help="Show processing information (default is on)")
 	parser.add_option("--trace", action="store_true", dest="trace", default=False, help="Displays a ton of debugging information.")
