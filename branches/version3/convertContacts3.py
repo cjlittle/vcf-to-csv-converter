@@ -26,7 +26,7 @@ import re
 import sys
 import glob
 import codecs
-from optparse import OptionParser
+from optparse import OptionParser, Option 
 
 class VcfToCsvConverter:
 	def __outputQuote(self):
@@ -438,8 +438,8 @@ def main():
 	usage = "usage: %prog -i<filename>|-p<pathname> -o<filename> -d<option> -q -v"
 	version = "%prog v0.3.000 2009-11-25 - by Petar Strinic http://petarstrinic.com\nMultifile input contribution by Dave Dartt"
 	description = "This program was designed to take the information within a vcard and export it's contents to a csv file for easy import into other address book clients."
-	parser = OptionParser(usage, version, description)
-	parser.add_option("-i", "--input", action="store", dest="input_file", default="None", help="Read data from FILENAME (required if no path specified)")
+	parser = OptionParser(option_class=MyOption, usage, version, description)
+	parser.add_option("-i", "--input", action="extend", dest="input_file", default="None", help="Read data from FILENAME (required if no path specified)")
 	parser.add_option("-p", "--path", action="store", dest="input_path", default="None", help="Process all vcards within specified directory (required if no filename specified)")
 	parser.add_option("-o", "--output", action="store", dest="output_file", default="addrs.csv", help="Name of .csv file to output too (default is addrs.csv)")
 	parser.add_option("-d", "--delim", action="", dest="delimiter", default="\t", help="Delimiter to use: comma, semicolon, newline, tab (default is tab)")
@@ -450,41 +450,28 @@ def main():
 	(options, args) = parser.parse_args()
 	if len(args) == 0:
 		parser.error("incorrect number of arguments")
-	if options.a and options.b:
-		parser.error("options -a and -b are mutually exclusive")
-	if options.verbose:
-		print "reading %s..." % options.filename
-
-
+	if options.input_file != None and options.input_path != None:
+		parser.error("options -i and -p are mutually exclusive ...use one or the other but not both")
+	delimiter = options.delimiter
 	delimiter_string = "tab"
-		if parser.delimiter == "comma":
-			delimiter = ","
-			delimiter_string = "comma"
-		elif value == "semicolon":
-			delimiter = ";"
-			delimiter_string = "semicolon"
-		elif value == "newline":
-			delimiter = "\r\n"
-			delimiter_string = "newline"
-		else:
-			delimiter = "\t"
-			delimiter_string = "tab"
-
-	if (input_file == None and input_path == None) or output_file == None:
-		print "missing required parameters"
-		usage()
-		sys.exit(2)
-	if input_file != None and input_path == None:
-		print "converting %s > %s (%s delimited)" % (input_file, output_file, delimiter_string)
-		VcfToCsvConverter(input_file, input_path, output_file, delimiter, quote, trace)
+	if options.delimiter == "comma":
+		delimiter = ","
+		delimiter_string = "comma"
+	elif options.delimiter == "semicolon":
+		delimiter = ";"
+		delimiter_string = "semicolon"
+	elif options.delimiter == "newline":
+		delimiter = "\r\n"
+		delimiter_string = "newline"
+	if (options.input_file == None and options.input_path == None) or options.output_file == None:
+		parser.error("Required options are missing")
+	if options.input_file != None and options.input_path == None:
+		print "converting %s > %s (%s delimited)" % (options.input_file, options.output_file, delimiter_string)
+		VcfToCsvConverter(options.input_file, options.input_path, options.output_file, delimiter, options.quote, options.trace)
 		sys.exit(0)
-	elif input_file == None and input_path != None:
-		print "converting files within path: %s > %s (%s delimited)" % (input_path, output_file, delimiter_string)
-		VcfToCsvConverter(input_file, input_path, output_file, delimiter, quote, trace)
-		sys.exit(0)
-	else:
-		print "Invalid filename or path"
-		usage()
+	elif options.input_file == None and options.input_path != None:
+		print "converting files within path: %s > %s (%s delimited)" % (options.input_path, options.output_file, delimiter_string)
+		VcfToCsvConverter(options.input_file, options.input_path, options.output_file, delimiter, options.quote, options.trace)
 		sys.exit(0)
 
 if __name__ == "__main__":
